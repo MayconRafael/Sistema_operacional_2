@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+        <head>
+                <meta charset="utf-8" />
+                <link rel="stylesheet" href="css/cadastro.css" />
+                <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        </head>
+        <body> 
+                
+                <div class="topnav">
+                        <a class="active" href="/home">Home</a>
+                        <a href="/cadastroreserva">Cadastro Reserva</a>                                  
+                </div>
+
+
+                <form id="form" method="post" action="/a">
+                        <div class="form_espaco_titulo">                                
+                                <label class="tituloForm">Cadastre sua reserva</label>
+                        </div>
+
+                        <div class="form_espaco_label">     
+                                <label class="label">Nome da Sala</label>
+                        </div>                        
+                        <div class="form_espaco_input">
+                                <input class="input" id="nomeSala" type="text"/>
+                        </div>  
+
+                        <div class="form_espaco_label">     
+                            <label class="label">Foto</label>
+                        </div>
+                        <div class="form_espaco_input">
+                                <input class="input" id="foto" type="text"/>
+                        </div>  
+
+                        <div class="form_espaco_label">     
+                            <label class="label">Local</label>
+                        </div>
+                        <div class="form_espaco_input">
+                                <input class="input" id="local" type="text"/>
+                        </div>  
+
+                        <div class="form_espaco_label">     
+                                <label class="label">Data de uso</label>
+                        </div>
+                        <div class="form_espaco_input">
+                                <input class="input" id="dataDeUso" type="date"/>
+                        </div>  
+
+                        <div class="form_espaco_label">     
+                                <label class="label">Hora Início do uso</label>
+                        </div>
+                        <div class="form_espaco_input">
+                                <input class="input" id="horaInicio" type="time"/>
+                        </div>
+                        
+                        <div class="form_espaco_label">     
+                                <label class="label">Hora FInal do uso</label>
+                        </div>
+                        <div class="form_espaco_input">
+                                <input class="input" id="horaFinal" type="time"/>
+                        </div> 
+
+                        <div class="form_espaco_label">     
+                                <label class="label">Responsável pelo uso</label>
+                        </div>
+                        <div class="form_espaco_input">
+                                <input class="input" id="responsavel" type="text"/>
+                        </div> 
+
+                        <div class="form_espaco_label">     
+                                <label class="label">Motivo do uso</label>
+                        </div>
+                        <div class="form_espaco_input">
+                                <input class="input" id="motivo" type="text"/>
+                        </div> 
+
+                        <div class="form_espaco_label">     
+                                <label class="label">Informações em geral</label>
+                        </div>
+                        <div class="form_espaco_input">
+                                <input class="input" id="informacoesGeral" type="text"/>
+                        </div>
+
+                        <div class="form_espaco_label">     
+                                <label class="label">Convidados</label>
+                        </div>
+                        <div class="form_espaco_input">
+                                <input class="input" id="convidados" type="text"/>
+                        </div> 
+
+                        <div class="form_espaco_botao">
+                                <button type="submit" class="botao">Cadastrar</button>   
+                        </div>                            
+                </form>                 
+                
+                <script>
+                        const form = document.getElementById('form');
+
+                        form.addEventListener('submit', async function(e){
+                                e.preventDefault();
+
+                                const formData = new FormData(form);
+
+                                const nomeSala = document.getElementById('nomeSala').value;
+                                const foto = document.getElementById('foto').value;   
+                                const local = document.getElementById('local').value; 
+                                const dataDeUso = document.getElementById('dataDeUso').value;
+                                const horaInicio = document.getElementById('horaInicio').value;
+                                const horaFinal = document.getElementById('horaFinal').value;
+                                const responsavel = document.getElementById('responsavel').value;
+                                const motivo = document.getElementById('motivo').value;
+                                const informacoesGeral = document.getElementById('informacoesGeral').value;
+                                const convidados = document.getElementById('convidados').value;
+                                
+                                let popUp = true;
+
+                                try {
+                                        const res = await axios.post('http://localhost:5000/addReserva',{
+                                                "nomeDaSala": nomeSala,
+                                                "foto": foto,
+                                                "local": local,
+                                                "dataDeUso": dataDeUso,
+                                                "horaInicio": horaInicio,
+                                                "horaFinal": horaFinal,
+                                                "responsavel": responsavel,
+                                                "motivo": motivo,
+                                                "informacoesGeral": informacoesGeral,
+                                                "convidados": convidados,
+
+                                        });
+                                        console.log(res.data);
+                                        if(res.data.usuario){
+                                                alert("Reserva cadastrada com sucesso!")
+                                        } else {
+                                                alert(res.data)
+                                        }                                        
+                                } catch (error){
+                                        console.log(error.message);                                                                                                                     
+                                }                             
+                        })
+                </script>
+        </body>
+</html> 
